@@ -47,3 +47,18 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+*.shp
+*.gpkg
+*.cpg
+*.dbf
+*.prj
+*.shx
+*.atx
+*.xml
+*.pdf
+*.DAT
+*.MAP
+*.tab
+*.ID
+*.sbx
+*.sbn
