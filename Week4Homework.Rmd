@@ -36,7 +36,7 @@ library(terra)
 
 import data
 ```{r}
-GII_origindata <- read_csv("C:/Users/SBH/OneDrive - University College London/#CASA0005__GeographicInformationSystemsAndScience/Week4/data_hw/HDR21-22_Composite_indices_complete_time_series.csv")
+GII_origindata <- read_csv(here::here("data_hw","HDR21-22_Composite_indices_complete_time_series.csv"))
 
 WorldSpatial <- st_read(here::here("data_hw","World_Countries_Generalized","World_Countries_Generalized.shp"))
 
