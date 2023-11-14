@@ -1,0 +1,57 @@
+---
+title: "ImitationWeek6"
+author: "BohaoSu"
+date: "2023-11-13"
+output: html_document
+---
+```{r}
+##upload the packages
+library(spatstat)
+library(here)
+library(sp)
+library(rgeos)
+library(maptools)
+library(tmap)
+library(sf)
+library(geojson)
+library(geojsonio)
+library(tmaptools)
+```
+reading the London Boroughs shp data
+```{r}
+LondonBoroughs <- st_read(here::here("data","statistical-gis-boundaries-london","ESRI","London_Borough_Excluding_MHW.shp"))
+```
+Pull out London using the str_detect() function from the stringr package in combination with filter() from dplyr (again!). We will look for the bit of the district code that relates to London (E09) from the ‘lad15cd’ column data frame of our sf object.
+```{r}
+library(stringr)
+
+BoroughMap <- LondonBoroughs %>%
+  dplyr::filter(str_detect(GSS_CODE, "^E09")) %>%
+  st_transform(., 27700)
+
+qtm(BoroughMap)
+
+```
+```{r}
+summary(BoroughMap)
+```
+Get all the location of Blue Plagues in the City
+
+```{r}
+BluePlaques <- st_read("https://s3.eu-west-2.amazonaws.com/openplaques/open-plaques-london-2018-04-08.geojson")
+
+summary(BluePlaques)
+```
+PLOT the Blue Plagues in the City
+
+```{r}
+tmap_mode("plot")
+tm_shape(BoroughMap) +
+  tm_polygons(col = NA, alpha = 0.5) +
+tm_shape(BluePlaques) +
+  tm_dots(col = "blue")
+```
+
+
+
+
