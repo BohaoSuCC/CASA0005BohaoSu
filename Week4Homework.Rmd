@@ -1,9 +1,9 @@
 ---
-title: "R Notebook"
+title: "Week5-Fork a repository"
 output: html_notebook
 ---
 
-load packages
+##load packages
 ```{r}
 library(sf)
 library(tidyverse)
@@ -34,14 +34,15 @@ library(terra)
 ```
 
 
-import data
+##import data
 ```{r}
 GII_origindata <- read_csv(here::here("data_hw","HDR21-22_Composite_indices_complete_time_series.csv"))
 
 WorldSpatial <- st_read(here::here("data_hw","World_Countries_Generalized","World_Countries_Generalized.shp"))
 
 ```
-tidy data
+
+##tidy data
 ```{r}
 GII_2010_19 <- GII_origindata[, c("iso3", "country", "hdicode", "region", "gii_2010", "gii_2019")]
 
@@ -49,13 +50,21 @@ GII_2010_19 <- GII_2010_19 %>%
   mutate(., Diff_10_19= gii_2019 - gii_2010)
 ```
 
-join data
+##join data
 ```{r}
 Spatial_GII_Joined <- WorldSpatial %>%
   left_join(., GII_2010_19, by = c("COUNTRY" = "country"))
 
 ```
 
+##Plot map
+```{r Plot the map}
+library(tmap)
+library(tmaptools)
+tmap_mode("plot")
+qtm(Spatial_GII_Joined, 
+    fill = "Diff_10_19")
+```
 
 
 
